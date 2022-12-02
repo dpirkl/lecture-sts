@@ -1,10 +1,10 @@
 import TTS
 from pathlib import Path
 
-
 from TTS.utils.manage import ModelManager
 from TTS.utils.synthesizer import Synthesizer
-from .speaker import Speaker 
+from .speaker import Speaker
+
 
 class TTSSpeaker(Speaker):
     out_path: Path
