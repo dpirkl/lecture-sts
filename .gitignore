@@ -129,6 +129,9 @@ dmypy.json
 .pyre/
 
 
+# .idea foler
+.idea/
+
 # my own
 data/
 TODO.md
