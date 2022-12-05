@@ -20,7 +20,7 @@ def get_audio_directory() -> Path:
 
 def get_audio_dest_directory() -> Path:
     """Returns the path to the audio destination directory."""
-    data_directory = get_project_directory()
+    data_directory = get_data_directory()
     return data_directory / "audio-translated"
 
 
