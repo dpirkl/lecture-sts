@@ -20,9 +20,22 @@ class Speaker:
 
         vocoder_path, vocoder_config_path, _ = manager.download_model(vocoder_name)
 
+        """ self.synthesizer = Synthesizer(
+            model_path, config_path, vocoder_path, vocoder_config_path, speaker_file
+        ) """
+
         self.synthesizer = Synthesizer(
-            model_path, config_path, vocoder_path, vocoder_config_path
+            tts_checkpoint=model_path,
+            tts_config_path=config_path,
+            tts_speakers_file=None,
+            tts_languages_file=None,
+            vocoder_checkpoint=vocoder_path,
+            vocoder_config=vocoder_config_path,
+            encoder_checkpoint=None,
+            encoder_config=None,
         )
+
+        print(self.synthesizer.tts_model.speaker_manager)
 
     def speak(self, text: str, output_path: str):
         """This method performs the actual text-to-speech conversion.
