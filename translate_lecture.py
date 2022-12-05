@@ -31,10 +31,8 @@ def main():
     # audio files are saved in AUDIO_DIRECTORY
     # new video files are saved in VIDEO_DIRECTORY
     for original_video in ORIGINAL_VIDEO_DIRECTORY.iterdir():
-        print(f"{original_video} is being processed")
-        print()
-        file_handler.get_audio_from_video_file(original_video)
-        file_handler.remove_audio_from_video_file(original_video)
+        file_handler.get_audio_from_video_file(str(original_video))
+        file_handler.remove_audio_from_video_file(str(original_video))
 
     # load the model
     model = whisper.load_model("tiny")
@@ -46,8 +44,6 @@ def main():
     for audio_file in AUDIO_DIRECTORY.iterdir():
         # transcribe audio file
         lecture_name = audio_file.stem
-        print(type(audio_file))
-        print(audio_file)
         result = model.transcribe(str(audio_file), **options)
 
         # save transcript to a text file
@@ -74,7 +70,7 @@ def main():
         # merge audio file and video file
         file_handler.merge_audio_and_video_to_mp4(video_file, audio_file)
 
-    for video_file in VIDEO_DEST_DIRECTORY.iterdir:
+    for video_file in VIDEO_DEST_DIRECTORY.iterdir():
         # add captions to video file
         video_name = video_file.stem
         captions_file = f"{video_name}.vtt"
