@@ -65,7 +65,7 @@ def main():
         synthesizer.speak(result["text"], translated_audio_path)
 
     for audio_file, video_file in zip(
-        AUDIO_DIRECTORY.iterdir(), VIDEO_DIRECTORY.iterdir()
+        AUDIO_DEST_DIRECTORY.iterdir(), VIDEO_DIRECTORY.iterdir()
     ):
         # merge audio file and video file
         file_handler.merge_audio_and_video_to_mp4(video_file, audio_file)
