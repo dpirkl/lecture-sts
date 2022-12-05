@@ -1,5 +1,7 @@
 import subprocess
 
+from pathlib import Path
+
 from utils import (
     VIDEO_DIRECTORY,
     AUDIO_DIRECTORY,
@@ -11,10 +13,14 @@ from utils import (
 
 
 def get_audio_from_video_file(video_file: str) -> None:
-    """Extracts the audio from the given video (from VIDEO_DIRECTORY) file and saves it to the audio directory."""
-    video_path = ORIGINAL_VIDEO_DIRECTORY / video_file
-    audio_path = AUDIO_DIRECTORY / (video_file.split(".")[0] + ".wav")
-    command = f"ffmpeg -y -i {video_path} -ab 160k -ac 2 -ar 44100 -vn {audio_path}"
+    """Extracts the audio from the given video file and saves it to the audio directory."""
+    print(video_file)
+    video_path: Path = video_file
+    video_name = video_path.name.split(".")[0]
+    print(video_name)
+    audio_path = AUDIO_DIRECTORY / (video_name + ".wav")
+    print(audio_path)
+    command = f"ffmpeg -y -i {video_file} -ab 160k -ac 2 -ar 44100 -vn {audio_path}"
     subprocess.call(command, shell=True)
 
 
