@@ -11,7 +11,7 @@ class Speaker:
 
     def __init__(self, model_name="tts_models/en/ljspeech/tacotron2-DDC"):
 
-        path = Path(TTS.__file__).parent.parent / "models.json"
+        path = Path(TTS.__file__).parent / ".models.json"
         manager = ModelManager(path)
 
         model_path, config_path, model_item = manager.download_model(model_name)
