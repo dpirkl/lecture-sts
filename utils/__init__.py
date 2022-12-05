@@ -1,4 +1,30 @@
-from .get_audio_directory import AUDIO_DEST_DIRECTORY
-from .deepl_authentication import get_key
+"""This module contains all the utility functions for the project."""
 
-AUTH_KEY = get_key()
+__all__ = [
+    "file_handler",
+    "path_handler",
+    "AUDIO_DIRECTORY",
+    "AUDIO_DEST_DIRECTORY",
+    "DATA_DIRECTORY",
+    "PROJECT_DIRECTORY",
+    "VIDEO_DEST_DIRECTORY",
+    "VIDEO_DIRECTORY",
+    "ORIGINAL_VIDEO_DIRECTORY",
+    "TRANSCRIPT_DIRECTORY",
+    "CAPTIONS_DIRECTORY",
+]
+
+from .path_handler import (
+    AUDIO_DIRECTORY,
+    AUDIO_DEST_DIRECTORY,
+    DATA_DIRECTORY,
+    PROJECT_DIRECTORY,
+    VIDEO_DEST_DIRECTORY,
+    VIDEO_DIRECTORY,
+    ORIGINAL_VIDEO_DIRECTORY,
+    TRANSCRIPT_DIRECTORY,
+    CAPTIONS_DIRECTORY,
+)
+
+from . import file_handler
+from . import path_handler
