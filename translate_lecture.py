@@ -1,4 +1,6 @@
 """This module is used to translate the videos."""
+from pathlib import Path
+
 import whisper
 
 from src.tts_wrapper import Speaker
@@ -15,7 +17,7 @@ from utils import (
 )
 
 
-def main():
+def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
     """This function is the main function of the program. It is called when the program is executed.
     It is responsible for the whole process of translating a lecture.
     Steps:
@@ -30,9 +32,8 @@ def main():
     # split all videos into audio files and video files without audio
     # audio files are saved in AUDIO_DIRECTORY
     # new video files are saved in VIDEO_DIRECTORY
-    for original_video in ORIGINAL_VIDEO_DIRECTORY.iterdir():
-        file_handler.get_audio_from_video_file(str(original_video))
-        file_handler.remove_audio_from_video_file(str(original_video))
+    for original_video in directory_of_videos.iterdir():
+        file_handler.split_video(original_video)
 
     # load the model
     model = whisper.load_model("tiny")
