@@ -50,7 +50,7 @@ class TTSSpeaker:
         vocoder_name=None,
     ):
 
-        path = Path(TTS.__file__).parent / "bin/../models.json"
+        path = Path(TTS.__file__).parent / ".models.json"
         print(path)
 
         self.manager = ModelManager(path)
