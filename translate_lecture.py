@@ -31,6 +31,8 @@ def main():
     # audio files are saved in AUDIO_DIRECTORY
     # new video files are saved in VIDEO_DIRECTORY
     for original_video in ORIGINAL_VIDEO_DIRECTORY.iterdir():
+        print(f"{original_video} is being processed")
+        print()
         file_handler.get_audio_from_video_file(original_video)
         file_handler.remove_audio_from_video_file(original_video)
 
@@ -44,20 +46,22 @@ def main():
     for audio_file in AUDIO_DIRECTORY.iterdir():
         # transcribe audio file
         lecture_name = audio_file.stem
-        result = model.transcribe(audio_file, **options)
+        print(type(audio_file))
+        print(audio_file)
+        result = model.transcribe(str(audio_file), **options)
 
         # save transcript to a text file
         transcript_path = TRANSCRIPT_DIRECTORY / f"{lecture_name}.txt"
-        with open(transcript_path, "w") as f:
-            whisper.utils.write_txt(result, file=f)
+        with open(transcript_path, "w", encoding="UTF-8") as transcript_file:
+            whisper.utils.write_txt(result["segments"], file=transcript_file)
 
         # generate captions
         captions_path_vtt = CAPTIONS_DIRECTORY / f"{lecture_name}.vtt"
-        with open(captions_path_vtt, "w") as vvt:
+        with open(captions_path_vtt, "w", encoding="UTF-8") as vvt:
             whisper.utils.write_vtt(result["segments"], file=vvt)
 
         captions_path_srt = CAPTIONS_DIRECTORY / f"{lecture_name}.srt"
-        with open(captions_path_srt, "w") as srt:
+        with open(captions_path_srt, "w", encoding="UTF-8") as srt:
             whisper.utils.write_srt(result["segments"], file=srt)
 
         # synthesize audio file
