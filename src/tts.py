@@ -3,10 +3,9 @@ from pathlib import Path
 
 from TTS.utils.manage import ModelManager
 from TTS.utils.synthesizer import Synthesizer
-from .speaker import Speaker
 
 
-class TTSSpeaker(Speaker):
+class TTSSpeaker:
     out_path: Path
     model_path: Path
     config_path: Path
