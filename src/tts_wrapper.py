@@ -35,8 +35,6 @@ class Speaker:
             encoder_config=None,
         )
 
-        print(self.synthesizer.tts_model.speaker_manager)
-
     def speak(self, text: str, output_path: str):
         """This method performs the actual text-to-speech conversion.
 
