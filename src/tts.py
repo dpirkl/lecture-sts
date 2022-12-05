@@ -29,26 +29,27 @@ class TTSSpeaker(Speaker):
 
     synthesizer: Synthesizer
 
-    def __init__(self,
-                 out_path,
-                 model_path=None,
-                 config_path=None,
-                 speakers_file_path=None,
-                 language_ids_file_path=None,
-                 vocoder_path=None,
-                 vocoder_config_path=None,
-                 encoder_path=None,
-                 encoder_config_path=None,
-                 speaker_idx=None,
-                 language_idx=None,
-                 speaker_wav=None,
-                 reference_wav=None,
-                 capacitron_style_wav=None,
-                 capacitron_style_text=None,
-                 reference_speaker_idx=None,
-                 model_name="tts_models/en/ljspeech/tacotron2-DDC",
-                 vocoder_name=None
-                 ):
+    def __init__(
+        self,
+        out_path,
+        model_path=None,
+        config_path=None,
+        speakers_file_path=None,
+        language_ids_file_path=None,
+        vocoder_path=None,
+        vocoder_config_path=None,
+        encoder_path=None,
+        encoder_config_path=None,
+        speaker_idx=None,
+        language_idx=None,
+        speaker_wav=None,
+        reference_wav=None,
+        capacitron_style_wav=None,
+        capacitron_style_text=None,
+        reference_speaker_idx=None,
+        model_name="tts_models/en/ljspeech/tacotron2-DDC",
+        vocoder_name=None,
+    ):
 
         path = Path(TTS.__file__).parent / "bin/../models.json"
         print(path)
@@ -75,11 +76,17 @@ class TTSSpeaker(Speaker):
 
         # load pre-trained model paths
         if model_name is not None and not model_path:
-            model_path, config_path, model_item = self.manager.download_model(model_name)
-            vocoder_name = model_item["default_vocoder"] if vocoder_name is None else vocoder_name
+            model_path, config_path, model_item = self.manager.download_model(
+                model_name
+            )
+            vocoder_name = (
+                model_item["default_vocoder"] if vocoder_name is None else vocoder_name
+            )
 
         if vocoder_name is not None and not vocoder_path:
-            vocoder_path, vocoder_config_path, _ = self.manager.download_model(vocoder_name)
+            vocoder_path, vocoder_config_path, _ = self.manager.download_model(
+                vocoder_name
+            )
 
         # set custom model paths
         if model_path is not None:
@@ -129,14 +136,13 @@ class TTSSpeaker(Speaker):
     def set_speaker_idx(self, speaker_idx):
         self.speaker_idx = speaker_idx
 
-    def language_idx(self, language_idx):
-        self.language_idx = language_idx
-
     def save_to_file(self, text, filename, audio_format="mp3"):
         """Overw"""
 
         # check the arguments against a multi-speaker model.
-        if self.synthesizer.tts_speakers_file and (not self.speaker_idx and not self.speaker_wav):
+        if self.synthesizer.tts_speakers_file and (
+            not self.speaker_idx and not self.speaker_wav
+        ):
             print(
                 " [!] Looks like you use a multi-speaker model. Define `--speaker_idx` to "
                 "select the target speaker. You can list the available speakers for this model by `--list_speaker_idxs`."
@@ -161,4 +167,6 @@ class TTSSpeaker(Speaker):
 
         # save the results
         print(" > Saving output to {}".format(self.out_path))
-        self.synthesizer.save_wav(wav, str(self.out_path / f"{filename}.{audio_format}"))
+        self.synthesizer.save_wav(
+            wav, str(self.out_path / f"{filename}.{audio_format}")
+        )
