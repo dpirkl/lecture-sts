@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 
@@ -51,6 +52,11 @@ def get_captions_directory() -> Path:
     return get_data_directory() / "captions"
 
 
+def get_video_caption_directory() -> Path:
+    """Returns the path to the captions directory."""
+    return get_data_directory() / "video-captions"
+
+
 AUDIO_DIRECTORY = get_audio_directory()
 AUDIO_DEST_DIRECTORY = get_audio_dest_directory()
 
@@ -66,3 +72,7 @@ ORIGINAL_VIDEO_DIRECTORY = get_original_video_directory()
 TRANSCRIPT_DIRECTORY = get_transcript_directory()
 
 CAPTIONS_DIRECTORY = get_captions_directory()
+
+PATH_SEPARATOR = os.path.sep
+
+VIDEO_CAPTIONS_DIRECTORY = get_video_caption_directory()

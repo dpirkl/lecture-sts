@@ -12,6 +12,8 @@ __all__ = [
     "ORIGINAL_VIDEO_DIRECTORY",
     "TRANSCRIPT_DIRECTORY",
     "CAPTIONS_DIRECTORY",
+    "PATH_SEPARATOR",
+    "VIDEO_CAPTIONS_DIRECTORY",
 ]
 
 from .path_handler import (
@@ -24,6 +26,8 @@ from .path_handler import (
     ORIGINAL_VIDEO_DIRECTORY,
     TRANSCRIPT_DIRECTORY,
     CAPTIONS_DIRECTORY,
+    PATH_SEPARATOR,
+    VIDEO_CAPTIONS_DIRECTORY,
 )
 
 from . import file_handler
