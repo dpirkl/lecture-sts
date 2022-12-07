@@ -74,8 +74,8 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
     for video_file in VIDEO_DEST_DIRECTORY.iterdir():
         # add captions to video file
         video_name = video_file.stem
-        captions_file = f"{video_name}.vtt"
-        file_handler.merge_video_and_captions(video_file, captions_file)
+        captions_file = CAPTIONS_DIRECTORY / f"{video_name}.vtt"
+        file_handler.merge_video_and_captions(video_file, str(captions_file))
 
 
 if __name__ == "__main__":
