@@ -20,10 +20,6 @@ class Speaker:
 
         vocoder_path, vocoder_config_path, _ = manager.download_model(vocoder_name)
 
-        """ self.synthesizer = Synthesizer(
-            model_path, config_path, vocoder_path, vocoder_config_path, speaker_file
-        ) """
-
         self.synthesizer = Synthesizer(
             tts_checkpoint=model_path,
             tts_config_path=config_path,
