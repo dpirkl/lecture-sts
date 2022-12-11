@@ -76,3 +76,21 @@ CAPTIONS_DIRECTORY = get_captions_directory()
 PATH_SEPARATOR = os.path.sep
 
 VIDEO_CAPTIONS_DIRECTORY = get_video_caption_directory()
+
+
+def create_folders():
+    """Create folders for storing audio, video and captions."""
+    if not os.path.exists(DATA_DIRECTORY):
+        os.makedirs(DATA_DIRECTORY)
+    if not os.path.exists(AUDIO_DIRECTORY):
+        os.makedirs(AUDIO_DIRECTORY)
+    if not os.path.exists(VIDEO_DIRECTORY):
+        os.makedirs(VIDEO_DIRECTORY)
+    if not os.path.exists(VIDEO_CAPTIONS_DIRECTORY):
+        os.makedirs(VIDEO_CAPTIONS_DIRECTORY)
+    if not os.path.exists(AUDIO_DEST_DIRECTORY):
+        os.makedirs(AUDIO_DEST_DIRECTORY)
+    if not os.path.exists(VIDEO_DEST_DIRECTORY):
+        os.makedirs(VIDEO_DEST_DIRECTORY)
+    if not os.path.exists(ORIGINAL_VIDEO_DIRECTORY):
+        os.makedirs(ORIGINAL_VIDEO_DIRECTORY)
