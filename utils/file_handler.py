@@ -6,15 +6,15 @@ This includes:
 - merging video and captions
 """
 
-import subprocess
 import os
+import subprocess
 
 from utils import (
-    VIDEO_DIRECTORY,
     AUDIO_DIRECTORY,
-    VIDEO_DEST_DIRECTORY,
     PATH_SEPARATOR,
     VIDEO_CAPTIONS_DIRECTORY,
+    VIDEO_DEST_DIRECTORY,
+    VIDEO_DIRECTORY,
 )
 
 
@@ -123,7 +123,73 @@ def delete(file_path: str) -> None:
     os.remove(file_path)
 
 
-def adjust_audio_length(audio_file: str, video_file: str) -> None:
-    """Adjusts the audio length to the video length."""
-    command = f"ffmpeg -y -i {audio_file} -i {video_file} -filter_complex amix=inputs=2:duration=first:dropout_transition=2 {audio_file}"
+def adjust_audio_length_atempo(
+    video_file: str,
+    audio_file: str,
+    output_path: str = str(VIDEO_DEST_DIRECTORY),
+    file_name: str = None,
+) -> None:
+    """Adjusts the audio length of the given audio file to the length of the given video file.
+    The output path is without the filename or extension."""
+
+    file_name = file_name if file_name else os.path.basename(video_file).split(".")[0]
+    output_path = output_path + PATH_SEPARATOR + f"{file_name}.wav"
+
+    atempo = calculate_atempo(video_file, audio_file)
+
+    command = f"ffmpeg -y -i {audio_file} -filter:a atempo={atempo} {output_path}"
     subprocess.call(command, shell=True)
+
+    # Delete the audio file.
+    # delete(audio_file)
+
+
+def calculate_atempo(video_file: str, audio_file: str) -> float:
+    """Calculates the atempo value for the given video and audio file."""
+    video_length = get_video_length_ffmpeg(video_file)
+    audio_length = get_audio_length_ffmpeg(audio_file)
+
+    atempo = audio_length / video_length
+
+    if atempo > 2:
+        atempo = 2
+    elif atempo < 0.5:
+        atempo = 0.5
+
+    return atempo
+
+
+def get_video_length_ffmpeg(video_file: str) -> float:
+    """Returns the length of the given video file in seconds."""
+    command = (
+        f"ffmpeg -i {video_file} 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//"
+    )
+    video_length = subprocess.check_output(command, shell=True)
+    video_length = video_length.decode("utf-8")
+    video_length = video_length.split(":")
+
+    hours = int(video_length[0])
+    minutes = int(video_length[1])
+    seconds = float(video_length[2])
+
+    video_length = hours * 3600 + minutes * 60 + seconds
+
+    return video_length
+
+
+def get_audio_length_ffmpeg(audio_file: str) -> float:
+    """Returns the length of the given audio file in seconds."""
+    command = (
+        f"ffmpeg -i {audio_file} 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//"
+    )
+    audio_length = subprocess.check_output(command, shell=True)
+    audio_length = audio_length.decode("utf-8")
+    audio_length = audio_length.split(":")
+
+    hours = int(audio_length[0])
+    minutes = int(audio_length[1])
+    seconds = float(audio_length[2])
+
+    audio_length = hours * 3600 + minutes * 60 + seconds
+
+    return audio_length

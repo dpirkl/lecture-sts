@@ -4,16 +4,15 @@ from pathlib import Path
 import whisper
 
 from src.tts_wrapper import Speaker
-
-from utils import file_handler
 from utils import (
     AUDIO_DEST_DIRECTORY,
     AUDIO_DIRECTORY,
-    VIDEO_DIRECTORY,
-    VIDEO_DEST_DIRECTORY,
+    CAPTIONS_DIRECTORY,
     ORIGINAL_VIDEO_DIRECTORY,
     TRANSCRIPT_DIRECTORY,
-    CAPTIONS_DIRECTORY,
+    VIDEO_DEST_DIRECTORY,
+    VIDEO_DIRECTORY,
+    file_handler,
 )
 
 
@@ -57,9 +56,10 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
         with open(captions_path_vtt, "w", encoding="UTF-8") as vvt:
             whisper.utils.write_vtt(result["segments"], file=vvt)
 
-        captions_path_srt = CAPTIONS_DIRECTORY / f"{lecture_name}.srt"
+        """captions_path_srt = CAPTIONS_DIRECTORY / f"{lecture_name}.srt"
         with open(captions_path_srt, "w", encoding="UTF-8") as srt:
             whisper.utils.write_srt(result["segments"], file=srt)
+        """
 
         # synthesize audio file
         translated_audio_path = AUDIO_DEST_DIRECTORY / f"{lecture_name}.wav"

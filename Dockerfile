@@ -12,8 +12,8 @@ RUN sudo apt update
 RUN sudo apt install ffmpeg
 RUN ffmpeg -version
 
-# create the folders for data storage and download the models
+# create the folders for data storage
 RUN python3 setup.py
 
 # translate the lecture
-RUN translate_lecture.py
+CMD [ "python3", "translate_lecture.py" ]
