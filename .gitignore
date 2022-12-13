@@ -137,5 +137,5 @@ data/
 TODO.md
 .vscode/
 tests/my_tests
-ai-lecture/
+ai_lecture/
 test.py
