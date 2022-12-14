@@ -8,6 +8,7 @@ from src.tts_wrapper import Speaker
 from utils import (
     AUDIO_DEST_DIRECTORY,
     AUDIO_DIRECTORY,
+    AUDIO_TRANSLATED_SPEED_DIRECTORY,
     CAPTIONS_DIRECTORY,
     ORIGINAL_VIDEO_DIRECTORY,
     TRANSCRIPT_DIRECTORY,
@@ -22,7 +23,7 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
     rtpt = RTPT(
         name_initials="DP",
         experiment_name="Translate_Lecture:_Intro_to_AI",
-        max_iterations=len(list(directory_of_videos.iterdir())) * 4,
+        max_iterations=(len(list(directory_of_videos.iterdir())) * 4),
     )
 
     rtpt.start()
@@ -81,8 +82,14 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
     for audio_file, video_file in zip(
         AUDIO_DEST_DIRECTORY.iterdir(), VIDEO_DIRECTORY.iterdir()
     ):
+
+        # change speed of audio file
+        file_handler.adjust_audio_length(str(audio_file), str(video_file))
+
         # merge audio file and video file
-        file_handler.merge_audio_and_video_to_mp4(video_file, audio_file)
+        file_handler.merge_audio_and_video_to_mp4(
+            video_file, str(AUDIO_TRANSLATED_SPEED_DIRECTORY / f"{audio_file.stem}.wav")
+        )
 
         rtpt.step()
 
