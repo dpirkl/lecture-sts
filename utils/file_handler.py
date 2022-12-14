@@ -9,7 +9,7 @@ This includes:
 import os
 import subprocess
 
-from utils import (
+from utils.path_handler import (
     AUDIO_DIRECTORY,
     AUDIO_TRANSLATED_SPEED_DIRECTORY,
     PATH_SEPARATOR,
@@ -27,7 +27,7 @@ def get_audio_from_video_file(
     file_name = file_name if file_name else os.path.basename(video_file).split(".")[0]
     audio_path = output_path + PATH_SEPARATOR + f"{file_name}.wav"
 
-    command = f"ffmpeg -y -i {video_file} -ab 160k -ac 2 -ar 44100 -vn {audio_path}"
+    command = f"ffmpeg -y -i {video_file} -ab 160k -ac 2 -ar 44100 -vn {audio_path} -hide_banner -loglevel error"
     subprocess.call(command, shell=True)
 
 
@@ -44,13 +44,7 @@ def merge_audio_and_video_to_mp4(
     file_name = file_name if file_name else os.path.basename(video_file).split(".")[0]
     output_path = output_path + PATH_SEPARATOR + f"{file_name}.mp4"
 
-    print()
-    print(f"output_path: {output_path}")
-    print(f"video_file: {video_file}")
-    print(f"audio_file: {audio_file}")
-    print()
-
-    command = f"ffmpeg -y -i {video_file} -i {audio_file} -c:v copy -c:a aac -strict experimental -b:a 192k {output_path}"
+    command = f"ffmpeg -y -i {video_file} -i {audio_file} -c:v copy -c:a aac -strict experimental -b:a 192k {output_path} -hide_banner -loglevel error"
     subprocess.call(command, shell=True)
 
     # Delete the video and audio file.
@@ -67,7 +61,7 @@ def remove_audio_from_video_file(
     file_name = file_name if file_name else os.path.basename(video_file).split(".")[0]
     output_path = output_path + PATH_SEPARATOR + f"{file_name}.mp4"
 
-    command = f"ffmpeg -y -i {str(video_file)} -vcodec copy -an {output_path}"
+    command = f"ffmpeg -y -i {str(video_file)} -vcodec copy -an {output_path} -hide_banner -loglevel error"
     subprocess.call(command, shell=True)
 
 
@@ -88,7 +82,7 @@ def merge_video_and_captions(
     print(captions_file)
     print(output_path)
 
-    command = f"ffmpeg -y -i {video_file} -vf subtitles={captions_file} {output_path}"
+    command = f"ffmpeg -y -i {video_file} -vf subtitles={captions_file} {output_path} -hide_banner -loglevel error"
     subprocess.call(command, shell=True)
 
     # Delete the video and captions file
@@ -176,7 +170,12 @@ def adjust_audio_length(
 
     speed = audio_length / video_length
 
-    command = f'ffmpeg -y -i {audio_file} -filter:a "atempo={speed}" {output_path}'
+    if speed > 2:
+        speed = 2
+    if speed < 0.5:
+        speed = 0.5
+
+    command = f'ffmpeg -y -i {audio_file} -filter:a "atempo={speed}" {output_path} -hide_banner -loglevel error'
     subprocess.call(command, shell=True)
 
     # Delete the audio file.
