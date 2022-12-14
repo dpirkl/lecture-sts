@@ -101,3 +101,9 @@ def create_folders():
         os.makedirs(VIDEO_DEST_DIRECTORY)
     if not os.path.exists(ORIGINAL_VIDEO_DIRECTORY):
         os.makedirs(ORIGINAL_VIDEO_DIRECTORY)
+    if not os.path.exists(TRANSCRIPT_DIRECTORY):
+        os.makedirs(TRANSCRIPT_DIRECTORY)
+    if not os.path.exists(CAPTIONS_DIRECTORY):
+        os.makedirs(CAPTIONS_DIRECTORY)
+    if not os.path.exists(AUDIO_TRANSLATED_SPEED_DIRECTORY):
+        os.makedirs(AUDIO_TRANSLATED_SPEED_DIRECTORY)
