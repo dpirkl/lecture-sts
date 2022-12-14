@@ -57,6 +57,11 @@ def get_video_caption_directory() -> Path:
     return get_data_directory() / "video-captions"
 
 
+def get_audio_translated_speed_directory() -> Path:
+    """Returns the path to the audio translated speed directory."""
+    return get_data_directory() / "audio-translated-speed"
+
+
 AUDIO_DIRECTORY = get_audio_directory()
 AUDIO_DEST_DIRECTORY = get_audio_dest_directory()
 
@@ -76,6 +81,8 @@ CAPTIONS_DIRECTORY = get_captions_directory()
 PATH_SEPARATOR = os.path.sep
 
 VIDEO_CAPTIONS_DIRECTORY = get_video_caption_directory()
+
+AUDIO_TRANSLATED_SPEED_DIRECTORY = get_audio_translated_speed_directory()
 
 
 def create_folders():
