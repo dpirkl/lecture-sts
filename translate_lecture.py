@@ -2,6 +2,7 @@
 from pathlib import Path
 
 import whisper
+from rtpt import RTPT
 
 from src.tts_wrapper import Speaker
 from utils import (
@@ -17,6 +18,18 @@ from utils import (
 
 
 def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
+
+    # get number of files in ORIGINAL_VIDEO_DIRECTORY
+    num_files = len(list(directory_of_videos.iterdir()))
+
+    rtpt = RTPT(
+        name_initials="DP",
+        experiment_name="Translate_Lecture:_Intro_to_AI",
+        max_iterations=len(list(directory_of_videos.iterdir())) * 4,
+    )
+
+    rtpt.start()
+
     """This function is the main function of the program. It is called when the program is executed.
     It is responsible for the whole process of translating a lecture.
     Steps:
@@ -33,6 +46,7 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
     # new video files are saved in VIDEO_DIRECTORY
     for original_video in directory_of_videos.iterdir():
         file_handler.split_video(original_video)
+        rtpt.step()
 
     # load the model
     model = whisper.load_model("tiny")
@@ -65,17 +79,23 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
         translated_audio_path = AUDIO_DEST_DIRECTORY / f"{lecture_name}.wav"
         synthesizer.speak(result["text"], translated_audio_path)
 
+        rtpt.step()
+
     for audio_file, video_file in zip(
         AUDIO_DEST_DIRECTORY.iterdir(), VIDEO_DIRECTORY.iterdir()
     ):
         # merge audio file and video file
         file_handler.merge_audio_and_video_to_mp4(video_file, audio_file)
 
+        rtpt.step()
+
     for video_file in VIDEO_DEST_DIRECTORY.iterdir():
         # add captions to video file
         video_name = video_file.stem
         captions_file = CAPTIONS_DIRECTORY / f"{video_name}.vtt"
         file_handler.merge_video_and_captions(video_file, str(captions_file))
+
+        rtpt.step()
 
 
 if __name__ == "__main__":
