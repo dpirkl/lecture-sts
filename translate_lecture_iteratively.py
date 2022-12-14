@@ -5,7 +5,8 @@ import whisper
 from rtpt import RTPT
 
 from src.tts_wrapper import Speaker
-from utils import (
+from utils import file_handler
+from utils.path_handler import (
     AUDIO_DEST_DIRECTORY,
     AUDIO_DIRECTORY,
     AUDIO_TRANSLATED_SPEED_DIRECTORY,
@@ -14,7 +15,6 @@ from utils import (
     TRANSCRIPT_DIRECTORY,
     VIDEO_DEST_DIRECTORY,
     VIDEO_DIRECTORY,
-    file_handler,
 )
 
 
