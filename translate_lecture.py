@@ -19,9 +19,6 @@ from utils import (
 
 def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
 
-    # get number of files in ORIGINAL_VIDEO_DIRECTORY
-    num_files = len(list(directory_of_videos.iterdir()))
-
     rtpt = RTPT(
         name_initials="DP",
         experiment_name="Translate_Lecture:_Intro_to_AI",
