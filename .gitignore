@@ -137,5 +137,5 @@ data/
 TODO.md
 .vscode/
 tests/my_tests
-lecture_sts/
+lecture_venv/
 test.py
