@@ -170,11 +170,6 @@ def adjust_audio_length(
 
     speed = audio_length / video_length
 
-    if speed > 2:
-        speed = 2
-    if speed < 0.5:
-        speed = 0.5
-
     command = f'ffmpeg -y -i {audio_file} -filter:a "atempo={speed}" {output_path} -hide_banner -loglevel error'
     subprocess.call(command, shell=True)
 
