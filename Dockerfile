@@ -14,6 +14,3 @@ RUN cd /root \
 
 # install the requirements
 RUN pip install -r requirements.txt
-
-# create a folder structure for the audio and video files
-RUN python3 setup.py
