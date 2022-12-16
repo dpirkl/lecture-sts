@@ -1,2 +1,3 @@
+#ignore the data folder and the virtual environment
 data
 lecture_venv
