@@ -5,7 +5,8 @@ import whisper
 from rtpt import RTPT
 
 from src.tts_wrapper import Speaker
-from utils import (
+from utils import file_handler
+from utils.path_handler import (
     AUDIO_DEST_DIRECTORY,
     AUDIO_DIRECTORY,
     AUDIO_TRANSLATED_SPEED_DIRECTORY,
@@ -14,19 +15,10 @@ from utils import (
     TRANSCRIPT_DIRECTORY,
     VIDEO_DEST_DIRECTORY,
     VIDEO_DIRECTORY,
-    file_handler,
 )
 
 
 def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
-
-    rtpt = RTPT(
-        name_initials="DP",
-        experiment_name="Translate_Lecture:_Intro_to_AI",
-        max_iterations=(len(list(directory_of_videos.iterdir())) * 4),
-    )
-
-    rtpt.start()
 
     """This function is the main function of the program. It is called when the program is executed.
     It is responsible for the whole process of translating a lecture.
@@ -39,65 +31,65 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
     - merge the video files and the captions
     """
 
-    # split all videos into audio files and video files without audio
-    # audio files are saved in AUDIO_DIRECTORY
-    # new video files are saved in VIDEO_DIRECTORY
-    for original_video in directory_of_videos.iterdir():
-        file_handler.split_video(original_video)
-        rtpt.step()
+    rtpt = RTPT(
+        name_initials="DP",
+        experiment_name="Translate_Lecture:_Intro_to_AI",
+        max_iterations=len(list(directory_of_videos.iterdir())),
+    )
+
+    rtpt.start()
 
     # load the model
-    model = whisper.load_model("tiny")
+    model = whisper.load_model("large")
     options = {"task": "translate", "fp16": False, "beam_size": 5, "best_of": 5}
 
     # load the synthesizer
     synthesizer = Speaker()
 
-    for audio_file in AUDIO_DIRECTORY.iterdir():
+    for original_video in directory_of_videos.iterdir():
+        # split all videos into audio files and video files without audio
+        # audio files are saved in AUDIO_DIRECTORY
+        # new video files are saved in VIDEO_DIRECTORY
+        file_handler.split_video(str(original_video))
+
         # transcribe audio file
-        lecture_name = audio_file.stem
-        result = model.transcribe(str(audio_file), **options)
-
-        # save transcript to a text file
-        transcript_path = TRANSCRIPT_DIRECTORY / f"{lecture_name}.txt"
-        with open(transcript_path, "w", encoding="UTF-8") as transcript_file:
-            whisper.utils.write_txt(result["segments"], file=transcript_file)
-
-        # generate captions
-        captions_path_vtt = CAPTIONS_DIRECTORY / f"{lecture_name}.vtt"
-        with open(captions_path_vtt, "w", encoding="UTF-8") as vvt:
-            whisper.utils.write_vtt(result["segments"], file=vvt)
-
-        """captions_path_srt = CAPTIONS_DIRECTORY / f"{lecture_name}.srt"
-        with open(captions_path_srt, "w", encoding="UTF-8") as srt:
-            whisper.utils.write_srt(result["segments"], file=srt)
-        """
-
-        # synthesize audio file
-        translated_audio_path = AUDIO_DEST_DIRECTORY / f"{lecture_name}.wav"
-        synthesizer.speak(result["text"], translated_audio_path)
-
-        rtpt.step()
-
-    for audio_file, video_file in zip(
-        AUDIO_DEST_DIRECTORY.iterdir(), VIDEO_DIRECTORY.iterdir()
-    ):
-
-        # change speed of audio file
-        file_handler.adjust_audio_length(str(audio_file), str(video_file))
-
-        # merge audio file and video file
-        file_handler.merge_audio_and_video_to_mp4(
-            video_file, str(AUDIO_TRANSLATED_SPEED_DIRECTORY / f"{audio_file.stem}.wav")
+        lecture_name = original_video.stem
+        result = model.transcribe(
+            str(AUDIO_DIRECTORY / f"{lecture_name}.wav"), **options
         )
 
-        rtpt.step()
+        # save transcript to a text file
+        with open((TRANSCRIPT_DIRECTORY / f"{lecture_name}.txt"), "w") as transcript:
+            whisper.utils.write_txt(result["segments"], file=transcript)
 
-    for video_file in VIDEO_DEST_DIRECTORY.iterdir():
-        # add captions to video file
-        video_name = video_file.stem
-        captions_file = CAPTIONS_DIRECTORY / f"{video_name}.vtt"
-        file_handler.merge_video_and_captions(video_file, str(captions_file))
+        # generate captions
+        with open(
+            (CAPTIONS_DIRECTORY / f"{lecture_name}.vtt"), "w", encoding="UTF-8"
+        ) as vvt:
+            whisper.utils.write_vtt(result["segments"], file=vvt)
+
+        # synthesize audio file
+        synthesizer.speak(
+            result["text"], str(AUDIO_DEST_DIRECTORY / f"{lecture_name}.wav")
+        )
+
+        # fit the length of the audio file to the length of the video file and save it in AUDIO_DEST_DIRECTORY
+        file_handler.adjust_audio_length(
+            audio_file=str(AUDIO_DIRECTORY / f"{lecture_name}.wav"),
+            video_file=str(VIDEO_DIRECTORY / f"{lecture_name}.mp4"),
+        )
+
+        # merge the audio file and the video file
+        file_handler.merge_audio_and_video_to_mp4(
+            VIDEO_DIRECTORY / f"{lecture_name}.mp4",
+            AUDIO_TRANSLATED_SPEED_DIRECTORY / f"{lecture_name}.wav",
+        )
+
+        # add captions to the video file
+        file_handler.merge_video_and_captions(
+            VIDEO_DEST_DIRECTORY / f"{lecture_name}.mp4",
+            CAPTIONS_DIRECTORY / f"{lecture_name}.vtt",
+        )
 
         rtpt.step()
 
