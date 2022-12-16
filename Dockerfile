@@ -8,14 +8,9 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# create a directory for the project
-RUN mkdir /tst
 
-# copy the project into the container
-COPY . /tst
-
-# set the working directory to the project directory
-WORKDIR /tst
+RUN cd /root \
+    && git clone https://github.com/dpirkl/lecture-sts.git
 
 # install the requirements
 RUN pip install -r requirements.txt
