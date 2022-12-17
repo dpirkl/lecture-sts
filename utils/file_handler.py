@@ -20,7 +20,7 @@ from utils.path_handler import (
 
 
 def get_audio_from_video_file(
-    video_file: str, output_path: str = AUDIO_DIRECTORY, file_name: str = None
+    video_file: str, output_path: str = str(AUDIO_DIRECTORY), file_name: str = None
 ) -> None:
     """Extracts the audio from the given video file and saves it to the audio directory."""
 
