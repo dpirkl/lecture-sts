@@ -78,7 +78,7 @@ TRANSCRIPT_DIRECTORY = get_transcript_directory()
 
 CAPTIONS_DIRECTORY = get_captions_directory()
 
-PATH_SEPARATOR = os.path.sep
+PATH_SEPARATOR = str(os.path.sep)
 
 VIDEO_CAPTIONS_DIRECTORY = get_video_caption_directory()
 
