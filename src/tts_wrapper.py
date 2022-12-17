@@ -9,7 +9,15 @@ from TTS.utils.synthesizer import Synthesizer
 class Speaker:
     """An instance of this object can generate audio from text using the TTS library."""
 
-    def __init__(self, model_name="tts_models/en/ljspeech/tacotron2-DDC"):
+    def __init__(
+        self, model_name="tts_models/en/ljspeech/tacotron2-DDC", use_cuda=False
+    ):
+        """Loads the specified model.
+
+        Args:
+            model_name (str, optional): The path to the model to load. Defaults to "tts_models/en/ljspeech/tacotron2-DDC".
+            use_cuda (bool, optional): This specifies whether you want to use cuda. Defaults to False.
+        """
 
         path = Path(TTS.__file__).parent / ".models.json"
         manager = ModelManager(path)
@@ -29,6 +37,7 @@ class Speaker:
             vocoder_config=vocoder_config_path,
             encoder_checkpoint=None,
             encoder_config=None,
+            use_cuda=use_cuda,
         )
 
     def speak(self, text: str, output_path: str):
@@ -36,7 +45,8 @@ class Speaker:
 
         Args:
             text (str): The text to be converted to speech.
-            output_path (str): The path to the output file.
+            output_path (str): The path of the created audio file.
         """
+
         wav = self.synthesizer.tts(text)
         self.synthesizer.save_wav(wav, output_path)
