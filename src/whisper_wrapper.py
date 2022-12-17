@@ -1,11 +1,8 @@
-"""This class is a simple wrapper for the whisper libary"""
 import whisper
 
 
 class Transcriber:
-
-    model: whisper.Whisper
-    fp16_settings: bool
+    """This class is a simple wrapper for the whisper libary"""
 
     def __init__(self, model: str = "small", fp16_settings: bool = False):
         """Initializes a Transcriber object. You can set the model size and specify the fp16 settings.
@@ -41,5 +38,5 @@ class Transcriber:
             dict: The result of the transcription. The plain text can be accessed by 'result["text"]'.
         """
 
-        options = whisper.DecodingOptions(task="translate")
-        return self.model.transcribe(file, fp16=self.fp16_settings, options=options)
+        options = {"task": "translate", "suppress_blank": False}
+        return self.model.transcribe(file, fp16=self.fp16_settings, **options)
