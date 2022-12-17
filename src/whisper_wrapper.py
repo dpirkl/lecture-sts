@@ -13,7 +13,6 @@ class SpeechToText:
 
     def transcribe(self, file: str) -> str:
         """Transcribes the given audio file."""
-        options = whisper.DecodingOptions(fp16=self.fp16_settings)
 
         result = self.model.transcribe(file, fp16=self.fp16_settings)["text"]
 
