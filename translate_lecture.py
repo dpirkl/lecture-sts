@@ -5,6 +5,7 @@ import whisper
 from rtpt import RTPT
 
 from src.tts_wrapper import Speaker
+from src.whisper_wrapper import Transcriber
 from utils import file_handler
 from utils.path_handler import (
     AUDIO_DEST_DIRECTORY,
@@ -34,14 +35,12 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
     rtpt = RTPT(
         name_initials="DP",
         experiment_name="Translate_Lecture:_Intro_to_AI",
-        max_iterations=len(list(directory_of_videos.iterdir())),
     )
 
     rtpt.start()
 
-    # load the model
-    model = whisper.load_model("large")
-    options = {"task": "translate", "fp16": False, "beam_size": 5, "best_of": 5}
+    # load the transcriber
+    transcriber = Transcriber(model="large", fp16_settings=True)
 
     # load the synthesizer
     synthesizer = Speaker()
@@ -54,8 +53,8 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
 
         # transcribe audio file
         lecture_name = original_video.stem
-        result = model.transcribe(
-            str(AUDIO_DIRECTORY / f"{lecture_name}.wav"), **options
+        result = transcriber.transcribe_and_translate(
+            str(AUDIO_DIRECTORY / f"{lecture_name}.wav")
         )
 
         # save transcript to a text file
@@ -90,8 +89,6 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
             VIDEO_DEST_DIRECTORY / f"{lecture_name}.mp4",
             CAPTIONS_DIRECTORY / f"{lecture_name}.vtt",
         )
-
-        rtpt.step()
 
 
 if __name__ == "__main__":
