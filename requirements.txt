@@ -1,6 +1,3 @@
 git+https://github.com/openai/whisper.git
-deepl
-pyttsx3
-click
 TTS
 rtpt
