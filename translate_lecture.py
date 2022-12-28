@@ -35,6 +35,7 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
     rtpt = RTPT(
         name_initials="DP",
         experiment_name="Translate_Lecture:_Intro_to_AI",
+        max_iterations=1,
     )
 
     rtpt.start()
