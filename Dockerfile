@@ -1,12 +1,12 @@
-FROM nvcr.io/nvidia/pytorch:22.06-py3
+FROM nvcr.io/nvidia/pytorch:latest
 
 # install python, ffmpeg and git
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
-    ffmpeg \
     git \
     vim \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 
