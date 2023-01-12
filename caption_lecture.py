@@ -11,7 +11,6 @@ from utils.path_handler import (
     CAPTIONS_DIRECTORY,
     ORIGINAL_VIDEO_DIRECTORY,
     TRANSCRIPT_DIRECTORY,
-    VIDEO_DIRECTORY,
 )
 
 
@@ -32,14 +31,16 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY, rtpt: bool = True
         rtpt = RTPT(
             name_initials="DP",
             experiment_name="Translate_Lecture:_Intro_to_AI",
-            max_iterations=1,
+            max_iterations=40,
         )
         rtpt.start()
 
     # load the transcriber
-    transcriber = Transcriber(model="tiny")
 
     for original_video in directory_of_videos.iterdir():
+        print(f"Transcribing {original_video.anchor}...")
+        transcriber = Transcriber(model="large")
+
         # split all videos into audio files and video files without audio
         # audio files are saved in AUDIO_DIRECTORY
         # new video files are saved in VIDEO_DIRECTORY
@@ -67,8 +68,10 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY, rtpt: bool = True
             captions_file=str(CAPTIONS_DIRECTORY / f"{lecture_name}.vtt"),
         )
 
+        rtpt.step()
+
 
 if __name__ == "__main__":
     print("Starting the program...")
-    main(rtpt=False)
+    main()
     print("Program finished.")
