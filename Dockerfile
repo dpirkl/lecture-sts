@@ -6,11 +6,13 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     ffmpeg \
     git \
+    vim \
     && rm -rf /var/lib/apt/lists/*
 
 
-RUN cd /root \
-    && git clone https://github.com/dpirkl/lecture-sts.git
+RUN git clone https://github.com/dpirkl/lecture-sts.git
+
+RUN mv lecture-sts/* project/
 
 # install the requirements
 RUN pip install -r requirements.txt
