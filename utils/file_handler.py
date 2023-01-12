@@ -78,18 +78,12 @@ def merge_video_and_captions(
     file_name = file_name if file_name else os.path.basename(video_file).split(".")[0]
     output_path = output_path + PATH_SEPARATOR + f"{file_name}.mp4"
 
-    print(video_file)
-    print(captions_file)
-    print(output_path)
-
     command = f"ffmpeg -y -i {video_file} -vf subtitles={captions_file} {output_path} -hide_banner -loglevel error"
     subprocess.call(command, shell=True)
 
     # Delete the video and captions file
     # delete(video_file)
     # delete(captions_file)
-
-    # HIER ETWAS ÄNDERN
 
 
 def split_video(
