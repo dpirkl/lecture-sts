@@ -75,7 +75,7 @@ def main(directory_of_videos: Path = ORIGINAL_VIDEO_DIRECTORY):
 
         # fit the length of the audio file to the length of the video file and save it in AUDIO_DEST_DIRECTORY
         file_handler.adjust_audio_length(
-            audio_file=str(AUDIO_DIRECTORY / f"{lecture_name}.wav"),
+            audio_file=str(AUDIO_DEST_DIRECTORY / f"{lecture_name}.wav"),
             video_file=str(VIDEO_DIRECTORY / f"{lecture_name}.mp4"),
         )
 
