@@ -129,13 +129,12 @@ python3 translate_lecture.py --diable_max_duration
     |- audio-translated/
     |- audio-translated-speed/
     |- subtitles/                   (subtitle files are saved here)
-    |- original-video/              (where the original videos go)
-    |- original-video-captions/     (original videos with subtitles)
     |- variables/                   (to avoid reprocessing)
-    |- video/
-    |- video-captions/
-    |- video-subtitles              (translated videos with subtitles)
+    |- video-original/              (where the original videos go)
+    |- video-original-subtitles/    (original videos with subtitles)
     |- video-translated/            (translated videos without subtitles)
+    |- video-translated-subtitles   (translated videos with subtitles)
+    |- video-without-audio/
 |- src/
     |- silence.py
     |- tts_wrapper.py
