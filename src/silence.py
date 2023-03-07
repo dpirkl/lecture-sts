@@ -15,7 +15,7 @@ class Silence:
 
     @classmethod
     def get_silence_segments_pydub(
-        cls, audio_file: str, silence_duration: float, silence_threshold: float = -50
+            cls, audio_file: str, silence_duration: float, silence_threshold: float = -50
     ) -> list:
         """This method uses pydub to detect silence in an audio file.
 
@@ -41,7 +41,7 @@ class Silence:
 
     @classmethod
     def add_silence_segments_whisper(
-        cls, segments: list, max_duration: int = None
+            cls, segments: list, max_duration: int = None
     ) -> list:
         """This method adds silence segments to a list of segments. It compares the start and end of the segments and
         adds silence if there is a difference. If a silence is added the key `text` is set to `__silence__`, since it
@@ -123,12 +123,12 @@ class Silence:
 
     @classmethod
     def add_silence_segments_pydub_whisper(
-        cls,
-        segments: list,
-        audio_file: str,
-        silence_duration: float = 1,
-        silence_threshold: float = -50,
-        max_duration: int = 30,
+            cls,
+            segments: list,
+            audio_file: str,
+            silence_duration: float = 1,
+            silence_threshold: float = -50,
+            max_duration: int = 30,
     ):
         """This method adds silence segments to the result of whisper transcription.
         It uses the information of both the whisper result and pydub.
@@ -175,21 +175,30 @@ class Silence:
 
             else:
                 difference = round(abs((segment["start"] - segments[i - 1]["end"])), 2)
-                if difference > 0.1:
+                if segment["text"] == "...":
                     result.append(
                         {
+                            "start": round(segments[i-1]["end"], 2),
+                            "end": round(segment["end"], 2),
                             "text": "__silence__",
+                        }
+                    )
+
+                elif difference > 0.1:
+                    result.append(
+                        {
                             "start": round(segments[i - 1]["end"], 2),
                             "end": round(segment["start"], 2),
+                            "text": "__silence__",
                         }
                     )
 
                     result.append(
                         {
-                            "text": segment["text"],
                             "start": round(segment["start"], 2),
                             "end": round(segment["end"], 2),
                             "duration": round((segment["end"] - segment["start"]), 2),
+                            "text": segment["text"],
                         }
                     )
 
@@ -202,17 +211,20 @@ class Silence:
                         max_duration=max_duration,
                     )
 
-        for segment in result:
+        i = 0
+        while i < len(result):
+            segment = result[i]
             duration = round((segment["end"] - segment["start"]), 2)
             if duration <= 0:
-                raise RuntimeError(
-                    f"Duration of segment is lower or equal to zero.\n"
-                    f"Duration: {duration}.\n"
-                    f"Segment:{segment}.\n"
-                    f"Use different segment method. See {__file__}"
-                )
+                raise RuntimeError(f"Duration of segment is lower than or equal to zero.")
 
             segment["duration"] = duration
+            if segment["text"] == "__silence__" and len(result) > i + 1 and result[i + 1]["text"] == "__silence__":
+                segment["end"] = result[i + 1]["end"]
+                segment["duration"] = segment["duration"] + result[i + 1]["duration"]
+                result.pop(i + 1)
+            else:
+                i += 1
 
         name = os.path.basename(audio_file).split(".")[0]
         dump(result, str(VARIABLE_DIRECTORY / f"{name}_en_segments.joblib"))
@@ -223,12 +235,12 @@ class Silence:
 
     @classmethod
     def _add_text(
-        cls,
-        pydub_segments: list,
-        result: list,
-        index: int,
-        segments: list,
-        max_duration: int,
+            cls,
+            pydub_segments: list,
+            result: list,
+            index: int,
+            segments: list,
+            max_duration: int,
     ) -> None:
         """Not intended for external use.
         This method is used by `add_silence_segments_pydub_whisper` to add text segments, including the pydub silence.
@@ -270,22 +282,22 @@ class Silence:
 
             result.append(
                 {
-                    "text": "__silence__",
                     "start": round(start, 2),
                     "end": round(start + pydub_duration, 2),
+                    "text": "__silence__",
                 }
             )
 
         if ((index == 0) or (result[-1]["text"] == "__silence__")) or (
-            (result[-1]["text"] != "__silence__")
-            and (result[-1]["duration"] > max_duration)
+                (result[-1]["text"] != "__silence__")
+                and (result[-1]["duration"] > max_duration)
         ):
             result.append(
                 {
-                    "text": segment["text"],
                     "start": round((segment["start"] + pydub_duration), 2),
                     "end": round(segment["end"], 2),
                     "duration": round((segment["end"] - segment["start"]), 2),
+                    "text": segment["text"],
                 }
             )
         else:
@@ -313,15 +325,15 @@ class Silence:
 
                 result.append(
                     {
-                        "text": "__silence__",
                         "start": round(result[-1]["end"], 2),
                         "end": round(end, 2),
+                        "text": "__silence__",
                     }
                 )
 
     @classmethod
     def _get_pydub_segments_for_whisper_segment(
-        cls, start: float, end: float, pydub_silence: list
+            cls, start: float, end: float, pydub_silence: list
     ) -> list:
         """This method returns silences starting between start and end.
 
