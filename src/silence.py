@@ -221,7 +221,7 @@ class Silence:
             segment["duration"] = duration
             if segment["text"] == "__silence__" and len(result) > i + 1 and result[i + 1]["text"] == "__silence__":
                 segment["end"] = result[i + 1]["end"]
-                segment["duration"] = segment["duration"] + result[i + 1]["duration"]
+                segment["duration"] = round(abs(segment["end"]-segment["start"]), 2)
                 result.pop(i + 1)
             else:
                 i += 1
