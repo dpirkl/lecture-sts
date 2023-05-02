@@ -132,6 +132,28 @@ class Transcriber:
         )
 
     @classmethod
+    def write_txt(cls, result: dict, output_dir: str):
+        """This method generates a txt file with the transcription.
+
+        Args:
+            result (dict): The "segments" key of the dict result returned by whisper.
+            output_dir (str): The path to the txt file.
+        """
+        logging.info(
+            f"{os.path.basename(output_dir).split('.')[0]}: Generating txt file."
+        )
+        with open(str(output_dir), "w") as f:
+            for segment in result["segments"]:
+                print(
+                    segment['text'].strip(),
+                    file=f,
+                    flush=True,
+                )
+        logging.info(
+            f"{os.path.basename(output_dir).split('.')[0]}: Txt file generated."
+        )
+
+    @classmethod
     def _format_timestamp(
         cls,
         seconds: float,
