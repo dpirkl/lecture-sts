@@ -72,7 +72,7 @@ def main(
         file_handler.split_video(str(original_video))
 
         # If the audio file has already been transcribed, this method uses the stored results.
-        transcriber = Transcriber(model="large", fp16_settings=True)
+        transcriber = Transcriber(model="large", fp16_settings=True, language='german')
         result = transcriber.transcribe_and_translate(
             str(AUDIO_DIRECTORY / f"{lecture_name}.wav"), no_cache=no_cache
         )
