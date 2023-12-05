@@ -3,7 +3,7 @@ import logging
 from pathlib import Path
 
 from rtpt import RTPT
-
+import os
 from src import whisper_wrapper
 from utils.file_handler import embed_two_subtitles_in_mp4, get_audio_from_video_file
 from utils.path_handler import (
@@ -17,6 +17,7 @@ from utils.path_handler import (
 
 def main(video_directory: str = None, no_cache=False, use_rtpt=True):
     video_directory = video_directory if video_directory else ORIGINAL_VIDEO_DIRECTORY
+    os.environ['CUDA_VISIBLE_DEVICES'] = '1' 
     if use_rtpt:
         rtpt = RTPT(
             name_initials="DP",

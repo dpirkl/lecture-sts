@@ -4,6 +4,7 @@ import logging
 from pathlib import Path
 
 from rtpt import RTPT
+import os
 
 from src.silence import Silence
 from src.speaker import SegmentsSpeaker
@@ -27,6 +28,7 @@ def main(
     use_rtpt: bool = True,
     use_cuda: bool = True,
     no_cache=False,
+    os.environ['CUDA_VISIBLE_DEVICES'] = '11'
 ):
     """This function is the main function of the program. It is called when the program is executed.
     It is responsible for the whole process of translating a lecture.
