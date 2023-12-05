@@ -1,4 +1,5 @@
-FROM nvcr.io/nvidia/pytorch:22.12-py3
+FROM download.pytorch.org/whl/cu118
+# FROM nvcr.io/nvidia/pytorch:22.12-py3
 
 # To avoid tzdata asking for user input.
 # There are also solutions that point to installing tzdata directly.
@@ -20,7 +21,7 @@ WORKDIR /
 
 RUN mkdir project
 
-RUN git clone https://github.com/dpirkl/lecture-sts.git
+RUN git clone https://github.com/OrbitPeppermint/lecture-sts.git
 
 RUN mv lecture-sts/* project/
 
