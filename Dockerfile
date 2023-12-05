@@ -1,4 +1,4 @@
-FROM download.pytorch.org/whl/cu118
+FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
 # FROM nvcr.io/nvidia/pytorch:22.12-py3
 
 # To avoid tzdata asking for user input.
