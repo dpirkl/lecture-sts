@@ -32,5 +32,11 @@ WORKDIR /project
 # Install requirements to perform the translation
 RUN pip install -r requirements.txt
 
+# Upgrade pip
+# RUN python3 -m pip install --upgrade pip
+
+# Install pytorch and torchvision
+RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
 # Creates the necessary folders and downloads the models
 RUN python3 setup.py
