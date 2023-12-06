@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '11'
 from pathlib import Path
 
 from rtpt import RTPT
@@ -18,7 +19,7 @@ from utils.path_handler import (
 
 def main(video_directory: str = None, no_cache=False, use_rtpt=False):
     video_directory = video_directory if video_directory else ORIGINAL_VIDEO_DIRECTORY
-    os.environ['CUDA_VISIBLE_DEVICES'] = '11'
+    
     if use_rtpt:
         rtpt = RTPT(
             name_initials="DP",

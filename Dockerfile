@@ -1,5 +1,6 @@
 FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
 # FROM nvcr.io/nvidia/pytorch:22.12-py3
+# used pytorch docker image by pytorch https://hub.docker.com/r/pytorch/pytorch/tags
 
 # To avoid tzdata asking for user input.
 # There are also solutions that point to installing tzdata directly.
@@ -38,7 +39,7 @@ RUN pip install -U openai-whisper
 # Upgrade pip
 # RUN python3 -m pip install --upgrade pip
 
-# Install pytorch and torchvision
+# Install pytorch and torchvision from https://pytorch.org/
 RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
 # Creates the necessary folders and downloads the models
