@@ -32,6 +32,7 @@ WORKDIR /project
 # Install requirements to perform the translation
 RUN pip install -r requirements.txt
 
+# Install latest Whisper Version
 RUN pip install -U openai-whisper
 
 # Upgrade pip
