@@ -38,7 +38,7 @@ WORKDIR /project
 RUN pip install -r requirements.txt
 
 # added for seamlessm4t
-RUN pip install -r dev_requirements.txt
+#UN pip install -r dev_requirements.txt
 
 # Install latest Whisper Version
 RUN pip install -U openai-whisper
