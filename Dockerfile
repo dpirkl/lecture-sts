@@ -51,10 +51,8 @@ RUN pip install -U openai-whisper
 RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
 #added for Seamlessm4t installation
-RUN pip install .
+#RUN pip install .
 
-#added Run Seamless m4t
-RUN python3 app.py
 
 # Creates the necessary folders and downloads the models
 RUN python3 setup.py
