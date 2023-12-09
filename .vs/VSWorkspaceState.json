@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\utils"
   ],
-  "SelectedNode": "\\translate_lecture.py",
+  "SelectedNode": "\\subtitles_en_original.py",
   "PreviewInSolutionExplorer": false
 }

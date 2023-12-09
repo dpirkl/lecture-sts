@@ -28,10 +28,20 @@ RUN mv lecture-sts/* project/
 
 RUN rm -r lecture-sts
 
+# added  for seamlessm4t installation
+RUN git clone https://github.com/facebookresearch/seamless_communication.git
+
+
 WORKDIR /project
 
 # Install requirements to perform the translation
 RUN pip install -r requirements.txt
+
+#added for Seamlessm4t installation
+RUN pip install .
+
+# added for seamlessm4t
+RUN pip install -r dev_requirements.txt
 
 # Install latest Whisper Version
 RUN pip install -U openai-whisper
@@ -41,6 +51,9 @@ RUN pip install -U openai-whisper
 
 # Install pytorch and torchvision from https://pytorch.org/
 RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+#added Run Seamless m4t
+RUN python3 app.py
 
 # Creates the necessary folders and downloads the models
 RUN python3 setup.py
