@@ -70,39 +70,39 @@ Move your videos to the **_original-video_** folder.
 To translate the audio of the video to english and add subtitles to it, you can run:
 
 ```bash
-python3 translate_lecture.py
+python3 translate_lecture.py {Index of GPU you want to use} [args]
 ```
 
 Or if you want to keep the original audio and just add english subtitles, run:
 
 ```bash
-python3 subtitles_en.py
+python3 subtitles_en.py {Index of GPU you want to use} [args]
 ```
 
 Subtitles in english and the original language:
 
 ```bash
-python3 subtitles_en_original.py
+python3 subtitles_en_original.py {Index of GPU you want to use} [args]
 ```
 
-### Options/Flags
+### Options/Flags/Args
 
 To see more details of the process, you can add the -v/--verbose flag the command.
 
 ```bash
-python3 subtitles_en.py -v
+python3 subtitles_en.py {Index of GPU you want to use} -v
 ```
 
 To disable [rtpt](https://github.com/ml-research/rtpt):
 
 ```bash
-python3 subtitles_en_original.py --disable_rtpt
+python3 subtitles_en_original.py {Index of GPU you want to use} --disable_rtpt
 ```
 
 Whether to use stored whisper results:
 
 ```bash
-python3 translate_lecture.py --no_cache
+python3 translate_lecture.py {Index of GPU you want to use} --no_cache
 ```
 
 #### For translate_lecture only
@@ -110,15 +110,15 @@ python3 translate_lecture.py --no_cache
 You can control the use of cuda via the --disable cuda flag:
 
 ```bash
-python3 translate_lecture.py --disable_cuda
+python3 translate_lecture.py {Index of GPU you want to use} --disable_cuda
 ```
 
 You can specify the maximum duration of a text segment in seconds for TTS or disable the maximum duration:
 
 ```bash
-python3 translate_lecture.py --max_segment_duration 30
+python3 translate_lecture.py {Index of GPU you want to use} --max_segment_duration 30
 
-python3 translate_lecture.py --diable_max_duration
+python3 translate_lecture.py {Index of GPU you want to use} --diable_max_duration
 ```
 
 ## Directory Structure
