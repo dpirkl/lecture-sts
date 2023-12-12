@@ -61,6 +61,10 @@ def main(video_directory: str = None, no_cache=False, use_rtpt=False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+     parser.add_argument(
+        "gpu",
+        help="Defines on which GPU this process should run, Integer between 0 and 15",
+    )
     parser.add_argument(
         "-v",
         "--verbose",
@@ -81,6 +85,13 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+     if int(args.gpu) < 16 and int (args.gpu) >= 0:
+        os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu,
+        print("Running Process on GPU " + args.gpu)
+
+    else:
+        os.environ['CUDA_VISIBLE_DEVICES'] = '11',
+        print("wrong GPU number, default GPU used: 11.")
     if args.verbose:
         logging.basicConfig(level=logging.INFO)
     if args.disable_rtpt:
