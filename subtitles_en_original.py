@@ -4,7 +4,7 @@ from pathlib import Path
 
 from rtpt import RTPT
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '11'
+import sys
 from src import whisper_wrapper
 from utils.file_handler import embed_two_subtitles_in_mp4, get_audio_from_video_file
 from utils.path_handler import (
@@ -97,11 +97,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.gpu.isdigit() and int(args.gpu) < 16 and int (args.gpu) >= 0:
         os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu,
-        print("Running Process on GPU " + args.gpu)
+        sys.print("Running Process on GPU " + args.gpu)
 
     else:
         os.environ['CUDA_VISIBLE_DEVICES'] = '11',
-        print("wrong GPU number, default GPU used: 11.")
+        sys.print("wrong GPU number, default GPU used: 11.")
     if args.verbose:
         logging.basicConfig(level=logging.INFO)
     if args.disable_rtpt:

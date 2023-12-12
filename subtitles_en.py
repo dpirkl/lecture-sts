@@ -1,7 +1,8 @@
 import argparse
 import logging
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '11'
+import sys
+
 from pathlib import Path
 
 from rtpt import RTPT
@@ -87,11 +88,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
      if args.gpu.isdigit() and int(args.gpu) < 16 and int (args.gpu) >= 0:
         os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu,
-        print("Running Process on GPU " + args.gpu)
+        sys.print("Running Process on GPU " + args.gpu)
 
     else:
         os.environ['CUDA_VISIBLE_DEVICES'] = '11',
-        print("wrong GPU number, default GPU used: 11.")
+        sys.print("wrong GPU number, default GPU used: 11.")
     if args.verbose:
         logging.basicConfig(level=logging.INFO)
     if args.disable_rtpt:
