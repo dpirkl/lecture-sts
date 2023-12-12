@@ -1,4 +1,4 @@
-git+https://github.com/openai/whisper.git@v20230124
+git+https://github.com/openai/whisper.git
 TTS==0.11.1
 rtpt
 pydub==0.25.1

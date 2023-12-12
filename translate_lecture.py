@@ -4,6 +4,8 @@ import logging
 from pathlib import Path
 
 from rtpt import RTPT
+import os
+import sys
 
 from src.silence import Silence
 from src.speaker import SegmentsSpeaker
@@ -26,7 +28,7 @@ def main(
     video_directory: Path = ORIGINAL_VIDEO_DIRECTORY,
     use_rtpt: bool = True,
     use_cuda: bool = True,
-    no_cache=False,
+    no_cache=False
 ):
     """This function is the main function of the program. It is called when the program is executed.
     It is responsible for the whole process of translating a lecture.
@@ -119,6 +121,11 @@ def main(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        "gpu",
+        help="Defines on which GPU this process should run, Integer between 0 and 15",
+        
+    )
+    parser.add_argument(
         "-v",
         "--verbose",
         help="increase output verbosity to logging lever INFO",
@@ -155,6 +162,13 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+    if args.gpu.isdigit() and int(args.gpu) < 16 and int (args.gpu) >= 0:
+        os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
+        print("Running Process on GPU " + args.gpu)
+
+    else:
+        os.environ['CUDA_VISIBLE_DEVICES'] = '11'
+        print("wrong GPU number, default GPU used: 11.")
     if args.verbose:
         logging.basicConfig(level=logging.INFO)
     if args.disable_rtpt:
