@@ -95,7 +95,7 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    if int(args.gpu) < 16 and int (args.gpu) >= 0:
+    if args.gpu.isdigit() and int(args.gpu) < 16 and int (args.gpu) >= 0:
         os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu,
         print("Running Process on GPU " + args.gpu)
 
