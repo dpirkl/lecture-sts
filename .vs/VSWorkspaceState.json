@@ -1,8 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\utils"
+    "\\src"
   ],
-  "SelectedNode": "\\subtitles_en.py",
+  "SelectedNode": "\\src\\speaker.py",
   "PreviewInSolutionExplorer": false
 }

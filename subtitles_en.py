@@ -91,7 +91,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
      if args.gpu < 16 and args.gpu >= 0:
         os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpu)
-        print("Running Process on GPU " + args.gpu)
+        print("Running Process on GPU " + str(args.gpu))
 
     else:
         os.environ['CUDA_VISIBLE_DEVICES'] = '0'
