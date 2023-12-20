@@ -18,10 +18,15 @@ Please contact me if you have any suggestions [david.pirkl@stud.tu-darmstadt.de]
 
 ### Dockerfile
 
-You can use the Dockerfile for a simple build. This takes care of all requirements/dependencies. You might want to change the base image, depending on the machine you are using. You have to configure a shared folder at **/project/data** to access the generated files. A simple command to run the image would be:
+You can use the Dockerfile for a simple build. This takes care of all requirements/dependencies. First you need to build a new docker images out of the Dockerfile.txt you find in this repository. You can choose an image_name you like:
 
 ```bash
-docker run --rm -v local_dir:/project/data --name lecture_sts name_of_your_docker_image:latest
+docker build --no-cache -t {name} . -f Dockerfile.txt
+```
+You might want to change the base image, depending on the machine you are using. You have to configure a shared folder at **/project/data** to access the generated files. You can choose a name for your docker container with the flag --name {name_of_your_docker_container} A simple command to run the image would be:
+
+```bash
+docker run --gpus all --name {name_of_your_docker_container} -it --privileged -v local_dir:/project/data {image_name} 
 ```
 
 ### Manual
@@ -70,39 +75,46 @@ Move your videos to the **_original-video_** folder.
 To translate the audio of the video to english and add subtitles to it, you can run:
 
 ```bash
-python3 translate_lecture.py {Index of GPU you want to use} [args]
+python3 translate_lecture.py
 ```
 
 Or if you want to keep the original audio and just add english subtitles, run:
 
 ```bash
-python3 subtitles_en.py {Index of GPU you want to use} [args]
+python3 subtitles_en.py
 ```
 
 Subtitles in english and the original language:
 
 ```bash
-python3 subtitles_en_original.py {Index of GPU you want to use} [args]
+python3 subtitles_en_original.py
 ```
 
 ### Options/Flags/Args
 
+To define on which GPU the process will run you can add -g/--gpu argument followed by an integer value between (incl) 0 and 15.
+Default GPU is 0
+
+```bash
+python3 translate_lecture.py --gpu {int}
+```
+
 To see more details of the process, you can add the -v/--verbose flag the command.
 
 ```bash
-python3 subtitles_en.py {Index of GPU you want to use} -v
+python3 subtitles_en.py -v
 ```
 
 To disable [rtpt](https://github.com/ml-research/rtpt):
 
 ```bash
-python3 subtitles_en_original.py {Index of GPU you want to use} --disable_rtpt
+python3 subtitles_en_original.py --disable_rtpt
 ```
 
 Whether to use stored whisper results:
 
 ```bash
-python3 translate_lecture.py {Index of GPU you want to use} --no_cache
+python3 translate_lecture.py --no_cache
 ```
 
 #### For translate_lecture only
@@ -110,15 +122,15 @@ python3 translate_lecture.py {Index of GPU you want to use} --no_cache
 You can control the use of cuda via the --disable cuda flag:
 
 ```bash
-python3 translate_lecture.py {Index of GPU you want to use} --disable_cuda
+python3 translate_lecture.py --disable_cuda
 ```
 
 You can specify the maximum duration of a text segment in seconds for TTS or disable the maximum duration:
 
 ```bash
-python3 translate_lecture.py {Index of GPU you want to use} --max_segment_duration 30
+python3 translate_lecture.py --max_segment_duration 30
 
-python3 translate_lecture.py {Index of GPU you want to use} --diable_max_duration
+python3 translate_lecture.py --diable_max_duration
 ```
 
 ## Directory Structure
