@@ -49,13 +49,15 @@ If you do not want to use docker, you also can perform the steps manually. You n
 
 Clone the repository:
 
-latest Version (beta):
+latest Version (0.2 beta):
 
 ```bash
 git clone https://github.com/OrbitPeppermint/lecture-sts/
 ```
 
 forked from:
+
+0.1 Version
 
 ```bash
 git clone https://github.com/dpirkl/lecture-sts.git
