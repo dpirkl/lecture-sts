@@ -23,7 +23,7 @@ You can use the Dockerfile for a simple build. This takes care of all requiremen
 ```bash
 docker build --no-cache -t {name} . -f Dockerfile.txt
 ```
-You might want to change the base image, depending on the machine you are using. You have to configure a shared folder at **/project/data** to access the generated files. You can choose a name for your docker container with the flag ``--name {name_of_your_docker_container}``\ 
+You might want to change the base image, depending on the machine you are using. You have to configure a shared folder at **/project/data** to access the generated files. You can choose a name for your docker container with the flag:  ``--name {name_of_your_docker_container}`` 
 A simple command to run the image would be:
 
 ```bash
