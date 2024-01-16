@@ -62,7 +62,7 @@ def main(video_directory: str = None, no_cache=False, use_rtpt=False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-     parser.add_argument(
+    parser.add_argument(
         "-g",
         "--gpu",
         help="Define on which GPU this process should run, Integer between 0 and 15, Default is 0",
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-     if args.gpu < 16 and args.gpu >= 0:
+    if args.gpu < 16 and args.gpu >= 0:
         os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpu)
         print("Running Process on GPU " + str(args.gpu))
 

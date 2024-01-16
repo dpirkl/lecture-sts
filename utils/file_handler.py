@@ -117,7 +117,8 @@ def adjust_audio_length(audio_file: str, length: float, output_path: str = None)
     output_path = output_path if output_path else audio_file
     y, sr = librosa.load(audio_file)
     length_ms = length * 1000
-    factor = (librosa.get_duration(y, sr) * 1000) / length_ms
+    #Bug: get_duration() takes 0 positional arguments but 2 were given
+    factor = (librosa.get_duration(y=y, sr=sr) * 1000) / length_ms
     short_y = librosa.effects.time_stretch(y, factor)
 
     sf.write(output_path, short_y, sr)
