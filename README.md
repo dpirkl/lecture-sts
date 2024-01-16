@@ -21,7 +21,7 @@ Please contact me if you have any suggestions [david.pirkl@stud.tu-darmstadt.de]
 You can use the Dockerfile for a simple build. This takes care of all requirements/dependencies. First you need to build a new docker images out of the Dockerfile.txt you find in this repository. You can choose an image_name you like:
 
 ```bash
-docker build --no-cache -t {name} . -f Dockerfile.txt
+docker build --no-cache -t {image_name} . -f Dockerfile.txt
 ```
 You might want to change the base image, depending on the machine you are using. You have to configure a shared folder at **/project/data** to access the generated files. You can choose a name for your docker container with the flag:  ``--name {name_docker_container}`` \
 A simple command to run the image would be:
