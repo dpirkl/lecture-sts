@@ -103,7 +103,7 @@ python3 subtitles_en_original.py
 
 ### Options/Flags/Args
 
-To define on which GPU the process will run you can add -g/--gpu argument followed by an integer value between (incl) 0 and 15.
+To define on which GPU the process will run you can add the optional argument -g/--gpu argument followed by an integer value between (incl) 0 and 15.
 Default GPU is 0
 
 ```bash
