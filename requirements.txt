@@ -1,5 +1,6 @@
 git+https://github.com/openai/whisper.git
 TTS==0.22.0
+numpy==1.24.3
 rtpt
 pydub==0.25.1
 joblib==1.2.0
