@@ -10,7 +10,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Install deadsnakes repository for Python 3.11 Installation
 RUN apt-get update && add-apt-repository ppa:deadsnakes/ppa
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get install -y \
     tzdata \
     python3.11 \
     python3-pip \
