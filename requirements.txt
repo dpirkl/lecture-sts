@@ -1,5 +1,5 @@
 git+https://github.com/openai/whisper.git
-numpy==1.24.3
+numpy>= 1.20.3, != 1.22.0, != 1.22.1, != 1.22.2
 TTS==0.22.0
 rtpt
 pydub==0.25.1
