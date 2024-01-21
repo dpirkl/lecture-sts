@@ -8,8 +8,9 @@ FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install deadsnakes repository for Python 3.11 Installation
-RUN apt-get install software-properties-common && apt-get update
+RUN apt-get update && apt-get install software-properties-common -y
 RUN add-apt-repository ppa:deadsnakes/ppa
+
 # Install dependencies
 RUN apt-get install -y \
     tzdata \
