@@ -10,7 +10,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     tzdata \
-    python3 \
+    python3.11 \
     python3-pip \
     git \
     vim \
