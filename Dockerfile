@@ -7,6 +7,8 @@ FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
 # To avoid this issue, I went with both solutions.
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Install deadsnakes repository for Python 3.11 Installation
+RUN add-apt-repository ppa:deadsnakes/ppa
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     tzdata \
