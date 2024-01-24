@@ -81,7 +81,7 @@ You should make sure, you have the correct folder structure. To do this and down
 python3 setup.py
 ```
 
-Move your videos to the **_original-video_** folder.
+Move your videos to the **_original-video_** folder. Attention: Make sure that your files have no spaces in their names!
 
 To translate the audio of the video to english and add subtitles to it, you can run:
 
