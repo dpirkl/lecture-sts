@@ -33,7 +33,7 @@ RUN mv lecture-sts/* project/
 RUN rm -r lecture-sts
 
 # added  for seamlessm4t installation
-RUN git clone https://github.com/facebookresearch/seamless_communication.git
+# RUN git clone https://github.com/facebookresearch/seamless_communication.git
 
 
 WORKDIR /project
